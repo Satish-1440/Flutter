@@ -1,9 +1,8 @@
-import 'package:chat_application/chat_window.dart';
-import 'package:chat_application/Animation/FadeAnimation.dart';
+import 'chat_window.dart';
+import 'Animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'chat_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -66,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                         margin: EdgeInsets.only(top: 100),
                         child: Center(
                           child: Text("My Chat", style: TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold, letterSpacing: 3.0,
-                              ),),
+                          ),),
                         ),
                       )),
                     )
@@ -154,10 +153,10 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 'Login/Register',
                                 style: TextStyle(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    letterSpacing: 1.5,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
@@ -179,28 +178,25 @@ class _LoginPageState extends State<LoginPage> {
     Response response = await get("http://165.22.14.77:8080/Satish/WebChat/register.jsp?username=" + username + "&password=" + password);
     String responseFromServer = response.body.trim();
     if (responseFromServer.contains('Logged')) {
-      Fluttertoast.showToast(
-          msg: "Login successful!",
-          gravity: ToastGravity.BOTTOM
-      );
+      displayToast("Login successful!");
       chatWindow(username);
     }
     else if (responseFromServer.contains('Registered')) {
       String username = txtUsername.text;
-      Fluttertoast.showToast(
-          msg: 'Registration successful!',
-          gravity: ToastGravity.BOTTOM
-      );
+      displayToast('Registration successful!');
       chatWindow(username);
     }
     else if (responseFromServer == 'Invalid') {
-      Fluttertoast.showToast(
-          msg: "Invalid credentials!",
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.black,
-          textColor: Colors.white
-      );
+      displayToast("Invalid credentials!");
     }
+  }
+  void displayToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black,
+        textColor: Colors.white
+    );
   }
   void chatWindow(String username) {
     Navigator.push(
@@ -210,4 +206,5 @@ class _LoginPageState extends State<LoginPage> {
         )
     );
   }
+  
 }
